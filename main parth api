@@ -1,0 +1,86 @@
+'use strict';
+const axios = require('axios');
+const config = require('../Config');
+const ParseResponse = require('./BookingResponseParse');
+const GlobalObj = require('./Common');
+const Request = require('./Request');
+const apiCommon = require('../Utility/APICommonController');
+const fName = "EventBusProcessor";
+module.exports = function (app) {
+
+    app.post("/eventprocess", function (request, response) {
+        var methodName = '/eventprocess';
+        try {
+            var URL;
+            var headers;
+            var ClientCode = request.body.ClientCode;
+            var IsProcessed = request.body.IsProcessed;
+            var CreatedBy = request.body.CreatedBy;
+            var CreatedDate = request.body.CreatedDate;
+            var ModifiedBy = request.body.ModifiedBy;
+            var ModifiedDate = request.body.ModifiedDate;
+            var uniqueRowID = request.body.InputRequest.reference_module_unique_row_id;
+            var RefModule = request.body.InputRequest.reference_module;
+
+
+            var err = apiCommon.eventProcessErrRequest(ClientCode, RefModule, uniqueRowID, IsProcessed, CreatedBy, CreatedDate, ModifiedBy, ModifiedDate)
+            if (err != 'none') {
+                apiCommon.getError(err, fName, methodName, JSON.stringify(request.body));
+                response.send(err)
+                return;
+            }
+
+
+            if (GlobalObj.Booking.toLocaleLowerCase() == RefModule.toLocaleLowerCase()) {
+                URL = config.EBP_URL + "/BookingAPI/api/BookingDetail/BookingDetail/" + uniqueRowID;
+                headers = {
+                    "content-type": "application/json"
+                };
+            }
+            else if (GlobalObj.Invoice.toLocaleLowerCase() == RefModule.toLocaleLowerCase()) {
+                // URL = config.EBP_URL +  + uniqueRowID;
+                headers = {
+                    "content-type": "application/json"
+                };
+            }
+
+
+            axios({
+                url: URL,
+                method: 'get',
+                headers: headers
+            }).then((result) => {
+                var MetaData = ParseResponse(result.data);
+                var ActorCode = result.data.BookingDetailRS.CustomerDetails.Customerid;
+                var ActorName = result.data.BookingDetailRS.CustomerDetails.Firstname + result.data.BookingDetailRS.CustomerDetails.Lastname;
+                var ActorId = result.data.BookingDetailRS.CustomerContactDetails[0].Contactvalue;
+                var EntityId = result.data.BookingDetailRS.Booking.Bookingid;
+                var EntityCode = result.data.BookingDetailRS.Booking.Bookingref;
+
+                var jsonRequest = Request.auditWise();
+                
+                jsonRequest = jsonRequest.replace('###ActorCode###', ActorCode);
+                jsonRequest = jsonRequest.replace('###ActorName###', ActorName);
+                jsonRequest = jsonRequest.replace('###ActorId###', ActorId);
+                jsonRequest = jsonRequest.replaceAll('###EntityId###', EntityId);
+                jsonRequest = jsonRequest.replace('###EntityCode###', EntityCode);
+                jsonRequest = jsonRequest.replace('###MetaData###', MetaData);
+                
+                var resAPI = apiCommon.createFullApiLog(URL, "", result, "");
+                apiCommon.doLogs(resAPI, fName, methodName);
+
+                response.send(MetaData);
+
+            }).catch(err2 => {
+                var err3 = apiCommon.createFullApiLog(URL, request, "", err2);
+                apiCommon.getError(err3, fName, methodName, JSON.stringify(request.body));
+                err3 = { "APIError": '' + err2 + '' };
+                response.send(err3);
+            });
+
+        }
+        catch (err) {
+            return apiCommon.getError(err, "", "", JSON.stringify(request.body));
+        }
+    });
+}
