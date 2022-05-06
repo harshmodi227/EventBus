@@ -1,0 +1,119 @@
+EventBus_EndPoint=192.168.2.25|3487
+
+
+Authorization = 123456
+
+EB_MongoCon_URL = mongodb://trainee:trainee%40123@192.168.3.19:27017/training
+
+================config=============
+// config.js
+const dotenv = require('dotenv');
+const path = require('path');
+dotenv.config({
+  path: path.resolve(__dirname, '.env')
+});
+//console.log(process.env.NODE_ENV);
+module.exports = {
+  //NODE_ENV: process.env.NODE_ENV || 'development',
+  EventBus_EndPoint: process.env.EventBus_EndPoint,
+  EB_MongoCon_URL: process.env.EB_MongoCon_URL,
+  Authorization: process.env.Authorization
+}
+
+================commController=============
+const config = require("../Config");
+const Authentication = require('./Auth');
+const events = require('../DataAccess/Mongo/Events');
+const schema = require('../DataAccess/Mongo/EventSchema');
+const axios = require("axios");
+
+const url = config.EB_MongoCon_URL;
+
+const mongoose = require("mongoose");
+mongoose.connect(url);
+
+const conn = mongoose.connection;
+conn.on('open', () => {
+    console.log("connected to db")
+})
+
+
+
+module.exports = function (app) {
+
+
+    app.post("/processevent", function (req, res) {
+        try {
+            // console.log(req.body);
+            var refModule = req.body.inputrequest.reference_module;
+            var ClientCode = req.body.inputrequest.reference_module_unique_row_id;
+            var jsonData = {
+                "ClientCode": "-QW67",
+                "InputRequest": {
+                    "reference_module": refModule,
+                    "reference_module_unique_row_id": ClientCode
+                },
+                "IsProcessed": "False",
+                "CreatedBy": "1234567852",
+                "CreatedDate": "kdmodi",
+                "ModifiedBy": "kdmodi",
+                "ModifiedDate": "ModifiedDate"
+            }
+            Authentication(req);
+            if (Authentication(req) == 'true') {
+                events.InsertEvent(req);
+                axios({
+                    url: "http://192.168.2.25:3123/eventprocess",
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: jsonData
+                }).then((result) => {
+                    console.log(result.data);
+                })
+                res.send('Data Inserted Successfully');
+            }
+            else {
+                res.send("Authentication invalid");
+            }
+        }
+        catch (err) {
+            res.send({ "Error": "Error" });
+        }
+    });
+
+    // put method fro update 
+    app.put('/processevent', (req, res) => {
+        try {
+            events.UpdateEvent(req);
+            res.send("Data updated Successfully");
+        } catch (err) {
+            res.send('Error' + err)
+        }
+    })
+
+
+    // for checking data
+    app.get('/getevent', async (req, res) => {
+        try {
+            const data = await schema.find();
+            res.json(data);
+        } catch (error) {
+            console.log(`Error : ${error}`);
+        }
+    })
+
+
+};
+========================app=================
+// server.js
+const config = require('./Config.js');
+const cmnController = require("./CommonController");
+
+
+
+cmnController.appStarted('./src/API.js', config.EventBus_EndPoint, "EventBus");
+
+
+
