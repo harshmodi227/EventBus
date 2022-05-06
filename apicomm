@@ -1,0 +1,144 @@
+
+'use strict';
+const fs = require('fs');
+const logDir = './logs';
+
+
+var APICommonController = {
+
+    // if not contains http then add it. Mainly for local.
+    urlHTTP: function (url) {
+        if (url.toLowerCase().indexOf('http') === -1) {
+            url = 'http://' + url;
+        }
+        return url.replace('|', ':');
+    },
+
+    DISTINCT: function (json, value) {
+        let contains = false;
+        Object.keys(json).some(key => {
+            contains = typeof json[key] === 'object' ? APICommonController.DISTINCT(json[key], value) : json[key] === value;
+            return contains;
+        });
+        return contains;
+    },
+    // Get Error Common Node for any of raised exception or error with current date and also do logs file base
+    getError: function (err, fileName, methodName, request) {
+        try {
+            var dt = new Date();
+            var resAPI = APICommonController.createFullApiLog("", request, "", err);
+
+            APICommonController.doLogs(resAPI, fileName, methodName);
+
+            //logger(fileName,methodName).error('Error: ', err )
+            if (typeof err.message !== 'undefined' && err.message !== null) {
+                return { date: [dt.toString()], APIError: [err.stack || err] };
+            }
+            else {
+                return { date: [dt.toString()], APIError: [err] };
+            }
+
+        }
+        catch (err1) {
+            //logger(fileName,methodName).error('ErrorEX: ', err1 )
+            console.log(err1)
+        }
+
+    },
+
+    // To combine logs of API request and response
+    createFullApiLog: function (url, request, response, err) {
+        try {
+            if (typeof request.body !== 'undefined' && request.body !== null) {
+                if (!request.body || typeof request.body === 'object') {
+
+                    request = JSON.stringify(request.body)
+                }
+            }
+
+            if (typeof response !== 'undefined' && response !== null) {
+                if (!response || typeof response === 'object') {
+                    response = JSON.stringify(response.data)
+                }
+            }
+
+            if (typeof err === 'object') {
+                err = JSON.stringify(err)
+            }
+
+            var logs = "URL : " + url
+            logs = logs + '\r\n' + "Request : " + request
+            logs = logs + '\r\n' + "Response : " + response
+            logs = logs + '\r\n' + "Error : " + err
+            return logs;
+        }
+        catch (err1) {
+
+        }
+
+    },
+
+    // To combine logs of API request and response
+    doLogs: function (logString, fileName, methodName) {
+        try {
+
+            //var fPath = `${logDir}/${new Date().toISOString().slice(0, 10)}/${methodName}`;
+            var fPath = `${logDir}/${this.currnetDatetimestamp(true)}/${methodName}`;
+            if (!fs.existsSync(fPath)) {
+                fs.mkdirSync(fPath, { recursive: true });
+            }
+            var curDateTime = this.currnetDatetimestamp();
+            fileName = fileName.toString() + "_" + curDateTime;
+            fPath = fPath + `/${fileName}.txt`
+            logString = '\r\n---' + ` ${curDateTime}${'\r\n'} ${logString.stack || logString}`
+            fs.appendFile(fPath, logString, (err1) => {
+                if (err1) throw err1;
+
+            });
+        } catch (err) {
+            console.log('APIError:', err);
+        }
+    },
+
+    currnetDatetimestamp: function (isOnlyDate) {
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;      // "+ 1" becouse the 1st month is 0
+        var day = today.getDate();
+        var hour = today.getHours();
+        var minutes = today.getMinutes();
+        var secconds = today.getSeconds();
+        var ms = today.getMilliseconds();
+        if (isOnlyDate === true) {
+            return day + '_' + month + '_' + year;
+        }
+        return day + '_' + month + '_' + year + ' - ' + hour + '_' + minutes + '_' + secconds + '_' + ms;
+    },
+
+
+    eventProcessErrRequest: function (ClientCode, RefModule, uniqueRowID, CreatedBy, ModifiedBy) {
+        if (ClientCode == undefined || ClientCode == null || ClientCode == "") {
+            return "APIError: ClientCode Not Found."
+        }
+
+        if (RefModule == undefined || RefModule == null || RefModule == "") {
+            return "APIError: RefModule Not Found."
+        }
+        if (uniqueRowID == undefined || uniqueRowID == null || uniqueRowID == "") {
+            return "APIError: uniqueRowID Not Found."
+        }
+        if (CreatedBy == undefined || CreatedBy == null || CreatedBy == "") {
+            return "APIError: CreatedBy Not Found."
+        }
+        if (ModifiedBy == undefined || ModifiedBy == null || ModifiedBy == "") {
+            return "APIError: ModifiedBy Not Found."
+        }
+
+        return "none"
+    },
+
+
+
+};
+
+module.exports = APICommonController;
