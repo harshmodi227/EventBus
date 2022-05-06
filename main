@@ -1,0 +1,117 @@
+const config = require("../Config");
+const apiCommon = require("../Utility/APICommonController");
+const Authentication = require('./Auth');
+
+const events = require('../DataAccess/Mongo/Events');
+const schema = require('../DataAccess/DataAccessSchema/EventSchema');
+const axios = require("axios");
+
+// mongodb connection url
+const url = config.EB_MongoCon_URL;
+//eventprocess url 
+const URL = config.EB_EventBusProcessor_URL;
+
+const mongoose = require("mongoose");
+mongoose.connect(url);
+
+// const conn = mongoose.connection;
+// conn.on('open', () => {
+//     console.log("connected to db")
+// })
+
+
+const fName = 'EventBus';
+
+module.exports = function (app) {
+    app.post("/processevent", function (req, res) {
+        var methodName = '/processevent';
+        try {
+
+            var ClientCode = req.body.clientcode;
+            var CreatedBy = req.body.createdby;
+            var ModifiedBy = req.body.modifiedby;
+            var uniqueRowID = req.body.inputrequest.reference_module_unique_row_id;
+            var RefModule = req.body.inputrequest.reference_module;
+
+            var err = apiCommon.eventProcessErrRequest(ClientCode, RefModule, uniqueRowID, CreatedBy, ModifiedBy)
+            if (err != 'none') {
+                apiCommon.getError(err, fName, methodName, JSON.stringify(req.body));
+                res.send(err)
+                return;
+            }
+
+            var parsedResponse = {
+                "ClientCode": "-QW67",
+                "InputRequest": {
+                    "reference_module": RefModule,
+                    "reference_module_unique_row_id": uniqueRowID
+                },
+                "IsProcessed": "False",
+                "CreatedBy": "1234567852",
+                "CreatedDate": "kdmodi",
+                "ModifiedBy": "kdmodi",
+                "ModifiedDate": "ModifiedDate"
+            }
+
+            // authentication function call
+            Authentication(req);
+
+            if (Authentication(req) == 'true') {
+                events.InsertEvent(req);
+
+                res.send('Data Inserted Successfully');
+                // call eventProcess api
+                axios({
+                    url: URL,
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    data: parsedResponse
+                }).then((result) => {
+                    // console.log(parsedResponse);
+                    var resAPI = apiCommon.createFullApiLog(URL, parsedResponse, result, "");
+                    apiCommon.doLogs(resAPI, fName, methodName);
+                    console.log(result.data);
+                }).catch(err2 => {
+                    var err3 = apiCommon.createFullApiLog(URL, parsedResponse, "", err2);
+                    apiCommon.getError(err3, fName, methodName);
+                    err3 = { "Error": '' + err2 + '' };
+                    response.send(err3);
+                });
+            }
+            else {
+                res.send("Authentication invalid");
+            }
+        }
+        catch (err) {
+            var err3 = { "Error": '' + err + '' }
+            res.send(err3);
+            return apiCommon.getError(err);
+        }
+    });
+
+
+    // put method fro update 
+    app.put('/processevent', (req, res) => {
+        try {
+            events.UpdateEvent(req);
+            res.send("Data updated Successfully");
+        } catch (err) {
+            var err3 = { "Error": '' + err + '' }
+            res.send(err3);
+            return apiCommon.getError(err);
+        }
+    })
+
+
+    // for checking data
+    app.get('/getevent', async (req, res) => {
+        try {
+            const data = await schema.find();
+            res.json(data);
+        } catch (error) {
+            console.log(`Error : ${error}`);
+        }
+    })
+};
