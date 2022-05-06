@@ -1,0 +1,411 @@
+Booking API Call
+
+https://dev.moonstride.com/BookingAPI/api/BookingDetail/BookingDetail/66492
+
+
+{
+  "BookingDetailRS": {
+    "CustomerDetails": {
+      "Customerid": 20974,
+      "Title": "Mr",
+      "Firstname": "Vincenzo",
+      "Lastname": "Weissnat",
+      "Dateofbirth": "1989-01-19",
+      "Gender": "Male",
+      "Genderid": 1,
+      "Customertype": 1,
+      "Anniversarydate": "2013-02-19",
+      "Customerref": "C20974",
+      "CustomerTypeValue": "Individual",
+      "PreferredDestination": "Afghanistan,Nigeria,Russia",
+      "Blacklisted": false,
+      "FlagMarketingPreferenceSMS": false,
+      "FlagMarketingPreferenceEMAIL": true,
+      "FlagMarketingPreferencePOSTAL": false
+    },
+    "CustomerContactDetails": [
+      {
+        "Customercontactid": 0,
+        "Customerid": 0,
+        "Contacttypeid": "2",
+        "Contactvalue": "Sabina37@gmail.com",
+        "Flagdefault": true
+      }
+    ],
+    "Enquiry": {
+      "Externalrefs": [
+        {
+          "Providercode": "HUBSPOT",
+          "Reference": "22650224-7ed1-4290-86f1-0f62061d55ea"
+        }
+      ],
+      "Pipeline": {
+        "Stageid": 4,
+        "Stagename": "Quotation Stage"
+      },
+      "Createdby": 0,
+      "Updatedby": 0,
+      "Enquiryid": 54802,
+      "Quotationid": 0,
+      "Customerid": 0,
+      "Currencyid": 0,
+      "Enquirydate": "2022-04-13T10:57:41.06",
+      "Enquiryfolloupdate": "0001-01-01T00:00:00",
+      "Enquirysource": 0,
+      "Customertype": 0,
+      "Travelcategory": 0,
+      "Sourceid": 0,
+      "Destinationid": 0,
+      "Followupdate": "0001-01-01T00:00:00",
+      "Assignto": 0,
+      "Enquirytitle": "New Enquiry as Quotation system engine",
+      "Enquirypreferredcurrencycode": "USD",
+      "Sourcename": "HubSpot",
+      "Assigntouseremail": "kamleshpatel@vsourzltd.com",
+      "Enquirydesc": "Money Market Account"
+    },
+    "Booking": {
+      "Externalrefs": [
+        {
+          "Providercode": "HUBSPOT",
+          "Reference": "22650224-7ed1-4290-86f1-0f62061d55ea"
+        }
+      ],
+      "Pipeline": {
+        "Stageid": 4,
+        "Stagename": "Quotation Stage"
+      },
+      "Bookingid": 66492,
+      "Bookingdate": "2022-04-13",
+      "Flagreservation": false,
+      "Agentid": 0,
+      "Agentuserid": 0,
+      "Agentcommision": 0.0,
+      "Flagmanualbookingref": false,
+      "Thirdpartybookingrefno": "",
+      "Mastersessionid": "",
+      "Sourceofenquiryid": 0,
+      "Bookingref": "Q23339",
+      "Createdby": 1,
+      "Updatedby": 0,
+      "Assigntouserid": 0,
+      "Purposefortravelid": 0,
+      "Hearaboutusid": 0,
+      "Departuredate": "2022-05-03T00:00:00",
+      "Bookingcurrencyid": 165,
+      "Bookingcurrencyrate": 1.36,
+      "Noofadult": 1,
+      "Noofteenager": 0,
+      "Noofchild": 1,
+      "Noofinfant": 0,
+      "Multicommarkupamount": 0.0,
+      "Multicommarkupvalue": 0.0,
+      "Arabianmarkupamount": 0.0,
+      "Arabianmarkupvalue": 0.0,
+      "Multicomflightmarkupvalue": 0.0,
+      "Multicomflightmarkupamount": 0.0,
+      "Markupvalue": 0.0,
+      "Markupamount": 0.0,
+      "Totalcost": 0.0,
+      "Amounttotake": 0.0,
+      "Depositeamount": 0.0,
+      "Quotationid": 0,
+      "Bookingtypeid": 1,
+      "Companyid": 0,
+      "Userid": 0,
+      "Customerid": 20974,
+      "Bookingnumber": 66492,
+      "Bookingstatusid": 10,
+      "Paymentstatusid": 1,
+      "Flagsettlerefund": false,
+      "Changeflagsettle": false,
+      "Inactive": false,
+      "Bookingpolicychargeid": 0,
+      "Bookingpolicyid": 0,
+      "Flagamendment": false,
+      "Actualchargeamount": 0.0,
+      "Refundamount": 0.0,
+      "Bookedby": 1,
+      "Infoid": 0,
+      "Flagbookingwoquotation": false,
+      "Actualpaidamount": 0.0,
+      "Flagsuppliersettlement": false,
+      "Flagdisplaypreverify": false,
+      "Oldbookingstatusid": 0,
+      "Latepaymentfee": 0.0,
+      "Bakbookingtypeid": 0,
+      "Oldtotalcost": 0.0,
+      "Sellchannelid": 10,
+      "Depositruleid": 0,
+      "Calculationmethod": "\u0000",
+      "Depositvaluetype": "\u0000",
+      "Depositvalue": 0.0,
+      "Recomentdepositamount": 0.0,
+      "Processingfee": 0.0,
+      "Actualtotalprice": 0.00,
+      "Promotionalrate": 0.0,
+      "Arrivaldate": "1900-01-01T00:00:00",
+      "Totalagentnetprice": 0.0,
+      "Corporatecustomercontactpersonid": 0,
+      "Flaggroupbooking": false,
+      "Groupsize": 0,
+      "Flagdisplayage": false,
+      "Flagdisplaydob": false,
+      "Assigntouseremail": "kamleshpatel@vsourzltd.com",
+      "Createdbyuseremail": "kamleshpatel@vsourzltd.com",
+      "Currencycode": "USD",
+      "Currencysymbol": "$"
+    },
+    "FlightBooking": [
+      
+    ],
+    "HotelBooking": [
+      
+    ],
+    "TransferBooking": [
+      
+    ],
+    "SightSeeingBooking": [
+      
+    ],
+    "OtherBooking": [
+      
+    ],
+    "CruiseBooking": [
+      
+    ],
+    "PassengerInformation": [
+      {
+        "Passengerinformationid": 86710,
+        "Bookingid": 0,
+        "Title": "Mr",
+        "Firstname": "Vincenzo",
+        "Lastname": "Weissnat",
+        "Age": 18,
+        "Type": "Adult",
+        "Passengertypeid": 0,
+        "Flaglead": true,
+        "Agentid": 0,
+        "Customerid": 0,
+        "Flagdeleted": false,
+        "Gender": " ",
+        "Recid": 0,
+        "Infoid": 0,
+        "Genderid": 0,
+        "Email": "Sabina37@gmail.com"
+      },
+      {
+        "Passengerinformationid": 86711,
+        "Bookingid": 0,
+        "Title": "Mr",
+        "Firstname": "Child 1",
+        "Lastname": "Child 1",
+        "Age": 6,
+        "Type": "Child",
+        "Passengertypeid": 0,
+        "Flaglead": false,
+        "Agentid": 0,
+        "Customerid": 0,
+        "Flagdeleted": false,
+        "Gender": " ",
+        "Recid": 0,
+        "Infoid": 0,
+        "Genderid": 0,
+        "Email": ""
+      }
+    ],
+    "BookingInsuranceDetails": [
+      
+    ],
+    "ObjBookingPolicyBE": {
+      "Updatedby": 0,
+      "Updatedon": "0001-01-01T00:00:00",
+      "Createdby": 0,
+      "Createdon": "0001-01-01T00:00:00"
+    },
+    "ObjBookingPolicyChargeBE": {
+      "Chargeprice": 0.0,
+      "Updatedby": 0,
+      "Updatedon": "0001-01-01T00:00:00",
+      "Createdby": 0,
+      "Createdon": "0001-01-01T00:00:00"
+    },
+    "ObjBookingPolicyChargeHistoryBE": {
+      "Infoid": 0,
+      "Chargeprice": 0.0,
+      "Createdby": 0,
+      "Createdon": "0001-01-01T00:00:00"
+    },
+    "CustomerAddress": {
+      "Customeraddressid": 0,
+      "Address1": "Kutch Dam",
+      "Address2": "16049 Jarret Islands",
+      "County": "",
+      "Postcode": "Architect e-services paradigms copy",
+      "Countryname": "Central African Republic",
+      "Cityname": "Rueckerland"
+    },
+    "FlightBookingEntity": {
+      "Bookingid": 0,
+      "Flightbookingid": 0,
+      "Supplierid": 0,
+      "Adultrate": 0.0,
+      "Teenagerrate": 0.0,
+      "Childrate": 0.0,
+      "Infantrate": 0.0,
+      "Noofadult": 0,
+      "Noofteenager": 0,
+      "Noofchild": 0,
+      "Noofinfant": 0,
+      "Taxes": 0.0,
+      "Bookingfees": 0.0,
+      "Flightcurrencyid": 0,
+      "Flightcurrencyrate": 0.0,
+      "Adulttaxamount": 0.0,
+      "Teenagertaxamount": 0.0,
+      "Childtaxamount": 0.0,
+      "Infanttaxamount": 0.0,
+      "Adultbookingfee": 0.0,
+      "Teenagerbookingfee": 0.0,
+      "Childbookingfee": 0.0,
+      "Infantbookingfee": 0.0,
+      "Supplieradultrate": 0.0,
+      "Supplierchildrate": 0.0,
+      "Supplierinfantrate": 0.0,
+      "Adultnetrate": 0.0,
+      "Childnetrate": 0.0,
+      "Infantnetrate": 0.0,
+      "Flightnetatolcharge": 0.0,
+      "Flightgrossatolcharge": 0.0,
+      "Totalflightgrossamount": 0.0,
+      "Totalflightnetamount": 0.0,
+      "Netatolcharge": 0.0,
+      "Grossatolcharge": 0.0,
+      "Basetotalamount": 0.0,
+      "Customeradultrate": 0.0,
+      "Customerteenagerrate": 0.0,
+      "Customerchildrate": 0.0,
+      "Customerinfantrate": 0.0
+    },
+    "FlightBookingDetail": {
+      "Flightbookingdetailidflightdetailsid": 0,
+      "Flightbookingid": 0,
+      "Parsedrequestresponselogsid": 0,
+      "Flightdetailsbyproviderid": 0,
+      "Travelfromid": 0,
+      "Traveltoid": 0,
+      "Outboundflightclassid": 0,
+      "Inboundflightclassid": 0,
+      "Frequentflyerprogramid": 0,
+      "Bookingstatusid": 0,
+      "Bookingpolicychargeid": 0,
+      "Bookingpolicyid": 0,
+      "Flagamendment": false,
+      "Totalcost": 0.0,
+      "Actualchargeamount": 0.0,
+      "Refundamount": 0.0,
+      "Agentcommission": 0.0,
+      "Classofflightsid": 0,
+      "Actualcostamount": 0.0,
+      "Flagverified": false,
+      "Flighttypeid": 0,
+      "Baggageid": 0,
+      "Agentid": 0,
+      "Agentnetprice": 0.0,
+      "Agentcommissionfinal": 0.0,
+      "Agentcommissiontopay": 0.0,
+      "Agentcommissioncurrencyid": 0,
+      "Agentnetpricecurrencyid": 0,
+      "Showdescriptioninitinerary": false,
+      "Showdescriptioninbookingvoucher": false,
+      "Suppliercommission": 0.0,
+      "Suppliercommissionreceivable": 0.0,
+      "Supplierpayablecost": 0.0,
+      "Suppliercommissioncurrencyid": 0,
+      "SellChannelId": 0
+    },
+    "BookingConnectingFlights": [
+      
+    ],
+    "Notes": [
+      {
+        "Noteid": 28055,
+        "Notetitle": "New Internal Note Title",
+        "Notedescription": "New Internal Note Desc",
+        "Notecreatedby": "mahipal rav",
+        "Notecreatedon": "2022-04-13T11:18:52.2",
+        "Notetype": "Internal",
+        "Notecategory": "Quotation"
+      },
+      {
+        "Noteid": 28054,
+        "Notetitle": "Business-focused holistic collaboration",
+        "Notedescription": "Face to face database analyzing ",
+        "Notecreatedby": "System Administrator",
+        "Notecreatedon": "2022-04-13T10:57:42.797",
+        "Notetype": "Internal",
+        "Notecategory": "Enquiry"
+      }
+    ],
+    "Tags": [
+      {
+        "Tagcategoryname": "Priority",
+        "Tagnames": [
+          "High"
+        ]
+      },
+      {
+        "Tagcategoryname": "Sales Type",
+        "Tagnames": [
+          "Flight Only",
+          "Land Only"
+        ]
+      },
+      {
+        "Tagcategoryname": "Status",
+        "Tagnames": [
+          "Open"
+        ]
+      }
+    ]
+  },
+  "Success": true
+}
+
+
+
+=======================================Audit request=====================
+
+
+{
+    "customer_reference": "ASDF-1234-ZCVB-QW67",
+    "action_user_name": "User3",
+    "action_user_email_id": "user3@vsourzltd.com",
+    "reference_module": "Booking",
+    "reference_module_code": "B22275",
+    "reference_module_unique_row_id": "70950",
+    "reference_group": "Group2",
+    "reference_group_code": "GROUPCODE2",
+    "reference_group_unique_row_id": "10000",
+    "modules": {
+        "module1_name": "Module1",
+        "module1_code": "MOD1",
+        "module1_row_id": "123",
+        "module2_name": "Module2",
+        "module2_code": "MOD2",
+        "module2_row_id": "456",
+        "module3_name": "Module3",
+        "module3_code": "MOD3",
+        "module3_row_id": "789"
+    },
+    "action": "add",
+    "data": [
+        {
+            "field_name": "Travel Place",
+            "field_type": "textbox",
+            "value": "Ahmedabad"
+        }
+        
+    ],
+    "date_time": "2022-03-01T03:50:10.002Z"
+}
